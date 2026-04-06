@@ -1,0 +1,11 @@
+fastapi==0.110.1
+uvicorn==0.29.0
+pydantic==2.6.4
+langchain==0.1.13
+langgraph==0.0.30
+mem0ai
+graphiti-core
+supabase==2.4.0
+qdrant-client
+google-genai
+anthropic
