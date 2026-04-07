@@ -1,4 +1,4 @@
-# 🧠 MindTheContext
+# MindTheContext
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-MindTheContext-teal?style=for-the-badge)](https://your-deployment-domain.vercel.app)
 [![API Documentation](https://img.shields.io/badge/API_Docs-FastAPI-indigo?style=for-the-badge)](https://your-deployment-domain.vercel.app/mindthecontext)
@@ -9,17 +9,17 @@ Most conversational AI products lose context after 15–30 turns. **MindTheConte
 
 ---
 
-## 🏆 Hackathon Evaluator Quick Links
+## Quick Links
 
 - **Live Deployment**: 
   - Frontend (Next.js - Vercel): [Replace with Vercel Link]
-  - Backend API (FastAPI - Render/Railway): [Replace with Backend API Link]
+  - Backend API (FastAPI - Render): [Replace with Render Backend API Link]
 - **Repository**: Set to **Public**
 - **Demonstration**: Inside the deployment, navigate to **Manthan AI** to explore live pipeline telemetry executing natively.
 
 ---
 
-## 💡 What is Manthan AI?
+## What is Manthan AI?
 
 **Manthan AI** (accessible via our frontend) is **not a standalone foundational model/LLM**. 
 It is our native conversational client designed strictly as an aggressive real-time demonstration of the **MindTheContext** engine at work. 
@@ -31,7 +31,7 @@ While Manthan AI handles the UI and leverages independent Search (via Tavily), i
 
 ---
 
-## ⚙️ System Architecture
+## System Architecture
 
 MindTheContext is built using a highly decoupled 5-Layer pattern consisting of:
 
@@ -47,7 +47,7 @@ MindTheContext is built using a highly decoupled 5-Layer pattern consisting of:
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
 * **Dialogue Telemetry Engine**: Mathematically calculates a probability score for conversation breakage by actively measuring stall indexes, ambiguity rates, and entity recency logic.
 * **Context Break Fracture Isolation**: Detects whenever an end-user forgets what they are talking about (e.g. *"wait, what project again?"*) and isolates the semantic branch instantly.
@@ -56,7 +56,7 @@ MindTheContext is built using a highly decoupled 5-Layer pattern consisting of:
 
 ---
 
-## 🛠️ Installation & Local Setup
+## Installation & Local Setup
 
 ### 1. Clone the public repository
 ```bash
