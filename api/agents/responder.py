@@ -47,6 +47,12 @@ def generate_response(compressed_context: str, current_message: str) -> str:
             except Exception as e2:
                 log.error(f"Anthropic bridge fractured: {e2}")
 
+        # Ultimate fallback for conversational memory when ALL LLMs are dead
+        c_lower = current_message.lower()
+        history_keywords = ["we talk", "i say", "you remember", "earlier", "at first", "before", "history", "my name", "said"]
+        if any(hk in c_lower for hk in history_keywords):
+            return f"*(Connecting via Offline Graph Memory)*\n\nI am operating in offline memory mode. Based on my records, here is exactly what we discussed:\n\n{compressed_context}"
+
         import os
         tavily_key = os.getenv("TAVILY_API_KEY")
         if tavily_key:
