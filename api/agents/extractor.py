@@ -23,7 +23,13 @@ client = genai.Client(api_key=settings.GEMINI_API_KEY) if settings.GEMINI_API_KE
 
 SYSTEM_PROMPT = """You are an entity extraction system.
 Analyze the user's turn and extract the specified entity fields.
-Output ONLY raw JSON matching the schema exactly, with no markdown, no preamble, and no code block tags."""
+Output ONLY raw JSON matching the schema exactly: 
+{
+  "people": [], "organizations": [], "projects": [], "locations": [], "temporal_anchors": [], 
+  "intent": "query", "goals": [], "pronouns_needing_resolution": [], 
+  "importance_score": 0.5, "is_question": false, "topic_shift": false
+}
+Do not include any markdown, preamble, or code block tags."""
 
 def extract_entities(content: str) -> ExtractedTurn:
     if not client:
