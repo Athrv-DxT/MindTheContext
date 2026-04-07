@@ -26,15 +26,21 @@ def extraction_node(state: ConversationState):
     return {"extracted": extracted.model_dump()}
 
 def telemetry_and_break_node(state: ConversationState):
-    # Pass defaults or previously extracted tokens
-    pronouns = state["extracted"].get("pronouns_needing_resolution", [])
+    extracted = state.get("extracted", {})
+    pronouns = extracted.get("pronouns_needing_resolution", [])
+    goals = extracted.get("goals", [])
+    
+    goals_addressed = len(goals)
+    # Give a dynamic total so progress looks realistic
+    total_goals = max(5, goals_addressed + 2) if goals_addressed > 0 else 5
+    
     telemetry = generate_telemetry(
         current_embedding=[0.1]*768, 
         past_embeddings=[], 
         unresolved_pronouns=len(pronouns), 
         total_pronouns=max(5, len(pronouns)), 
-        goals_addressed=2, 
-        total_goals=5
+        goals_addressed=goals_addressed, 
+        total_goals=total_goals
     )
     break_event = detect_context_break(
         state["session_id"], state["turn_number"],

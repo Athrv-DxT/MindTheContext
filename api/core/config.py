@@ -1,10 +1,14 @@
 import os
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from dotenv import load_dotenv
+
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+load_dotenv(os.path.join(ROOT_DIR, ".env"))
 
 class Settings(BaseSettings):
     GEMINI_API_KEY: str = ""
-    GEMINI_MODEL_EXTRACTION: str = "gemini-2.5-flash-latest"
-    GEMINI_MODEL_RESPONSE: str = "gemini-2.5-pro-latest"
+    GEMINI_MODEL_EXTRACTION: str = "gemini-2.5-flash"
+    GEMINI_MODEL_RESPONSE: str = "gemini-2.5-flash"
     GEMINI_MODEL_EMBEDDING: str = "models/text-embedding-004"
     
     ANTHROPIC_API_KEY: str = ""

@@ -13,20 +13,23 @@ class ChatRequest(BaseModel):
     session_id: Optional[str] = None
     message: str
     stream: bool = False
+    history: Optional[List[Dict[str, Any]]] = None
 
 @router.post("")
 async def chat_endpoint(req: ChatRequest):
     start_time = time.time()
     
     session_id = req.session_id or str(uuid.uuid4())
+    hist = req.history if req.history is not None else [{"role": "assistant", "content": "How can I help you regarding the project?"}]
+    turn = max(1, len(hist) // 2 + 1)
     
     # Example state initialization
     initial_state = {
         "session_id": session_id,
-        "turn_number": 42, # Mocking DB sequence retrieval
+        "turn_number": turn,
         "user_message": req.message,
         "graph_context": "User prefers concise answers",
-        "history_turns": [{"role": "assistant", "content": "How can I help you regarding the project?"}],
+        "history_turns": hist,
         "extracted": {},
         "telemetry": {},
         "break_event": {},
@@ -55,6 +58,14 @@ async def chat_endpoint(req: ChatRequest):
         })
         
     telemetry = final_state.get("telemetry", {})
+    extracted = final_state.get("extracted", {})
+    
+    # Aggressively map all possible arrays dynamically into active_entities
+    all_entities = []
+    if isinstance(extracted, dict):
+        keys_to_merge = ["people", "organizations", "projects", "locations", "temporal_anchors"]
+        for k in keys_to_merge:
+            all_entities.extend(extracted.get(k, []))
 
     return {
         "response": final_state.get("final_response", ""),
@@ -63,7 +74,7 @@ async def chat_endpoint(req: ChatRequest):
         "context": {
             "break_detected": final_state.get("break_event", {}).get("break_detected", False),
             "break_score": final_state.get("break_event", {}).get("score", 0.0),
-            "active_entities": final_state.get("extracted", {}).get("projects", []),
+            "active_entities": list(set(all_entities)),
             "goal_progress": telemetry.get("progress_estimator", 0),
             "reconstructed_references": reconstructed_arr
         },

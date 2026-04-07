@@ -5,7 +5,7 @@ export function ApiDocs() {
   const [tab, setTab] = useState('curl');
   
   const snippets: any = {
-    curl: `curl -X POST https://api.contextcore.app/chat \\
+    curl: `curl -X POST https://api.mindthecontext.app/chat \\
   -H "Authorization: Bearer cc_live_xxxxxxxxx" \\
   -H "Content-Type: application/json" \\
   -d '{
@@ -15,7 +15,7 @@ export function ApiDocs() {
     python: `import requests
     
 res = requests.post(
-    "https://api.contextcore.app/chat",
+    "https://api.mindthecontext.app/chat",
     headers={"Authorization": "Bearer cc_live_xxxxxxxxx"},
     json={
         "message": "Can you tell me more about that project?",
@@ -24,7 +24,7 @@ res = requests.post(
 )
 
 print(res.json()["context"]["reconstructed_references"])`,
-    javascript: `const res = await fetch("https://api.contextcore.app/chat", {
+    javascript: `const res = await fetch("https://api.mindthecontext.app/chat", {
   method: "POST",
   headers: {
     "Authorization": "Bearer cc_live_xxxxxxxxx",

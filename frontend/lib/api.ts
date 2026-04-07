@@ -28,11 +28,11 @@ export interface ChatMessage {
   contextData?: ContextData;
 }
 
-export async function sendChatMessage(message: string, sessionId: string | null) {
+export async function sendChatMessage(message: string, sessionId: string | null, history: ChatMessage[] = []) {
   const res = await fetch(`${API_URL}/chat`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ message, session_id: sessionId, stream: false })
+    body: JSON.stringify({ message, session_id: sessionId, stream: false, history })
   });
   if (!res.ok) throw new Error("API failed");
   return res.json();

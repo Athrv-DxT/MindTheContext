@@ -8,7 +8,7 @@ export function LiveDemo() {
     <section className="py-12 border-y border-slate-800/50 bg-slate-900/20 backdrop-blur-sm">
       <div className="max-w-5xl mx-auto px-6">
         <div className="text-center mb-16">
-           <h2 className="text-3xl font-bold mb-4 drop-shadow-md">See ContextCore in action</h2>
+           <h2 className="text-3xl font-bold mb-4 drop-shadow-md">See MindTheContext in action</h2>
            <p className="text-slate-400">Watch how the memory layer intercepts and resolves broken references in real-time.</p>
         </div>
 
@@ -62,7 +62,7 @@ export function LiveDemo() {
            <div className="w-full md:w-72 flex flex-col justify-center space-y-4">
               {[
                 { s: 1, title: "1. Send", desc: "User sends a vague message losing track of context." },
-                { s: 2, title: "2. Detect", desc: "ContextCore calculates fracture probability via telemetry." },
+                { s: 2, title: "2. Detect", desc: "MindTheContext calculates fracture probability via telemetry." },
                 { s: 3, title: "3. Reconstruct", desc: "Sonnet-4 reflects and repairs the reference automatically." }
               ].map(item => (
                  <div key={item.s} className={`p-4 rounded-xl border transition-all duration-300 ${step === item.s ? 'border-teal-500 bg-teal-500/10 shadow-lg scale-105' : 'border-slate-800 opacity-50 hover:opacity-75 cursor-pointer'}`} onClick={() => setStep(item.s)}>

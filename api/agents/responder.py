@@ -6,10 +6,10 @@ from api.core.logger import log
 client = genai.Client(api_key=settings.GEMINI_API_KEY) if settings.GEMINI_API_KEY else None
 
 def generate_response(compressed_context: str, current_message: str) -> str:
-    """Uses Gemini 2.5 Pro to generate the final response using the highly optimized context core payload."""
+    """Uses Gemini 2.5 Flash unconditionally to natively process Context Graph outputs."""
     if not client:
-        log.error("Google API client not initialized. Cannot generate response.")
-        return "I'm temporarily offline due to missing initialization keys."
+        log.error("Google API client not initialized.")
+        return "I'm temporarily offline due to missing keys."
 
     system_instruction = (
         "You are Manthan AI, an intelligent conversant that NEVER loses context. "
@@ -30,5 +30,8 @@ def generate_response(compressed_context: str, current_message: str) -> str:
         )
         return response.text
     except Exception as e:
+        import traceback
+        with open("responder_crash.log", "w") as f:
+            traceback.print_exc(file=f)
         log.error(f"Response Generator crashed: {e}")
         return "I encountered a minor cognitive delay processing that. Could you repeat?"
