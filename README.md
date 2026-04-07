@@ -1,7 +1,7 @@
 # MindTheContext
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-MindTheContext-teal?style=for-the-badge)](https://your-deployment-domain.vercel.app)
-[![API Documentation](https://img.shields.io/badge/API_Docs-FastAPI-indigo?style=for-the-badge)](https://your-deployment-domain.vercel.app/mindthecontext)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-MindTheContext-teal?style=for-the-badge)](https://mind-the-context.vercel.app)
+[![API Documentation](https://img.shields.io/badge/API_Docs-FastAPI-indigo?style=for-the-badge)](https://mindthecontext.onrender.com/docs)
 
 **The Universal Memory Layer your AI product is missing.**
 
@@ -12,8 +12,8 @@ Most conversational AI products lose context after 15–30 turns. **MindTheConte
 ## Quick Links
 
 - **Live Deployment**: 
-  - Frontend (Next.js - Vercel): [Replace with Vercel Link]
-  - Backend API (FastAPI - Render): [Replace with Render Backend API Link]
+  - Frontend (Next.js - Vercel): [https://mind-the-context.vercel.app](https://mind-the-context.vercel.app)
+  - Backend API (FastAPI - Render): [https://mindthecontext.onrender.com](https://mindthecontext.onrender.com)
 - **Repository**: Set to **Public**
 - **Demonstration**: Inside the deployment, navigate to **Manthan AI** to explore live pipeline telemetry executing natively.
 
