@@ -82,8 +82,20 @@ def _fallback_extractor(content: str) -> ExtractedTurn:
         except Exception as e:
             log.warning(f"Anthropic extractor fallback failed: {e}")
 
+    # Ultimate ZERO-DEPENDENCY Offline NLP Fallback to beat API Quotas
+    c_lower = content.lower()
+    words = [w.strip() for w in c_lower.split() if w.strip() not in ["the", "a", "an", "is", "of", "and", "to", "in", "for", "i", "what", "how", "have", "with", "are"]]
+    
+    projects = []
+    if "ml" in words or "machine" in words: projects.append("ML Engineering")
+    if "frontend" in words or "web" in words: projects.append("Web Development")
+    if len(words) > 2 and not projects:
+        projects.append(" ".join(words[-2:]))
+
+    pronouns = [w for w in ["it", "he", "she", "this", "that", "they", "them"] if w in c_lower.split()]
+    
     return ExtractedTurn(
-        people=[], organizations=[], projects=[], locations=[], temporal_anchors=[],
-        intent="query", goals=[], pronouns_needing_resolution=[], importance_score=0.5,
-        is_question=False, topic_shift=False
+        people=[], organizations=[], projects=projects, locations=[], temporal_anchors=[],
+        intent="query", goals=[c_lower[:30] + "..."], pronouns_needing_resolution=pronouns, importance_score=0.7,
+        is_question=("?" in content or "what" in c_lower or "how" in c_lower), topic_shift=False
     )
