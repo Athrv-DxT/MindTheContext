@@ -87,10 +87,13 @@ def _fallback_extractor(content: str) -> ExtractedTurn:
     words = [w.strip() for w in c_lower.split() if w.strip() not in ["the", "a", "an", "is", "of", "and", "to", "in", "for", "i", "what", "how", "have", "with", "are"]]
     
     projects = []
+    stop_words = {"do", "you", "know", "about", "what", "how", "is", "the", "a", "an", "and", "or", "but", "in", "on", "at", "to", "for", "with", "by", "this", "that", "it", "they", "them", "he", "she", "we", "i", "was", "were", "did", "does", "can", "could", "would", "should"}
+    important_words = [w.strip("?!.,") for w in c_lower.split() if w.strip("?!.,") not in stop_words and len(w) > 1]
+    
     if "ml" in words or "machine" in words: projects.append("ML Engineering")
-    if "frontend" in words or "web" in words: projects.append("Web Development")
-    if len(words) > 2 and not projects:
-        projects.append(" ".join(words[-2:]))
+    elif "frontend" in words or "web" in words: projects.append("Web Development")
+    elif important_words:
+        projects.append(" ".join(important_words))
 
     pronouns = [w for w in ["it", "he", "she", "this", "that", "they", "them"] if w in c_lower.split()]
     

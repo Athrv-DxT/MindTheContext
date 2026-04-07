@@ -37,16 +37,33 @@ Broken Reference:
 {broken_ref}
 """
     try:
-        message = client.messages.create(
-            model=settings.ANTHROPIC_MODEL,
-            max_tokens=1024,
-            temperature=0,
-            system="You output strictly valid JSON with no markdown block formatting or introductory text.",
-            messages=[
-                {"role": "user", "content": prompt}
-            ]
-        )
-        response_text = message.content[0].text
+        try:
+            # Prefer Claude for robust Deep Anaphora resolution
+            message = client.messages.create(
+                model=settings.ANTHROPIC_MODEL,
+                max_tokens=1024,
+                temperature=0,
+                system="You output strictly valid JSON with no markdown block formatting or introductory text.",
+                messages=[
+                    {"role": "user", "content": prompt}
+                ]
+            )
+            response_text = message.content[0].text
+        except Exception as anth_err:
+            log.warning(f"Anthropic Reflection failed: {anth_err}. Attempting Gemini Flash fallback.")
+            from google import genai
+            from google.genai import types
+            g_client = genai.Client(api_key=settings.GEMINI_API_KEY)
+            g_resp = g_client.models.generate_content(
+                model=settings.GEMINI_MODEL_EXTRACTION,
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    system_instruction="You output strictly valid JSON with no markdown block formatting or introductory text.",
+                    temperature=0.0
+                )
+            )
+            response_text = g_resp.text
+            
         cleaned = response_text.replace("```json", "").replace("```", "").strip()
         result = ReconstructionResult.model_validate_json(cleaned)
         
