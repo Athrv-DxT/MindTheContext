@@ -14,7 +14,6 @@ Most conversational AI products lose context after 15–30 turns. **MindTheConte
 - **Live Deployment**: 
   - Frontend (Next.js - Vercel): [https://mind-the-context.vercel.app](https://mind-the-context.vercel.app)
   - Backend API (FastAPI - Render): [https://mindthecontext.onrender.com](https://mindthecontext.onrender.com)
-- **Repository**: Set to **Public**
 - **Demonstration**: Inside the deployment, navigate to **Manthan AI** to explore live pipeline telemetry executing natively.
 
 ---
