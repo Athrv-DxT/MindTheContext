@@ -50,8 +50,11 @@ def telemetry_and_break_node(state: ConversationState):
 
 def reflection_node(state: ConversationState):
     reconstructed = {}
-    if state["break_event"]["break_detected"] and state["extracted"].get("pronouns_needing_resolution"):
-        broken_term = state["extracted"]["pronouns_needing_resolution"][0]
+    
+    # Trigger Anaphora Resolution purely on Pronoun existence globally, discarding arbitrary score thresholds
+    pronouns = state["extracted"].get("pronouns_needing_resolution", [])
+    if pronouns:
+        broken_term = pronouns[0]
         history_str = "\n".join([t.get('content', '') for t in state["history_turns"]])
         result = reconstruct_reference(history_str, state["graph_context"], broken_term)
         
@@ -59,6 +62,9 @@ def reflection_node(state: ConversationState):
             state["user_message"] = state["user_message"].replace(
                 result.original_text, result.resolved_reference
             )
+            # Inject context tags for strict downstream LLM awareness natively
+            state["user_message"] = f"[System Context Added: {result.original_text} -> {result.resolved_reference}] " + state["user_message"]
+        
         reconstructed = result.model_dump()
         
     return {"reconstructed": reconstructed, "user_message": state["user_message"]}
