@@ -25,11 +25,19 @@ SYSTEM_PROMPT = """You are an entity extraction system.
 Analyze the user's turn and extract the specified entity fields.
 Output ONLY raw JSON matching the schema exactly: 
 {
-  "people": [], "organizations": [], "projects": [], "locations": [], "temporal_anchors": [], 
-  "intent": "query", "goals": [], "pronouns_needing_resolution": [], 
-  "importance_score": 0.5, "is_question": false, "topic_shift": false
+  "people": ["List of people names"], 
+  "organizations": ["List of companies/orgs"], 
+  "projects": ["List of roles/projects/technologies"], 
+  "locations": ["List of locations"], 
+  "temporal_anchors": ["List of times/dates"], 
+  "intent": "String defining intent", 
+  "goals": ["List of goals/objectives"], 
+  "pronouns_needing_resolution": ["ambiguous pronouns like it/he/this"], 
+  "importance_score": 0.5, 
+  "is_question": false, 
+  "topic_shift": false
 }
-Do not include any markdown, preamble, or code block tags."""
+Do not include any markdown, preamble, or code block tags. If empty, return exactly [] for lists."""
 
 def extract_entities(content: str) -> ExtractedTurn:
     if not client:
