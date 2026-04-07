@@ -26,7 +26,7 @@ class Settings(BaseSettings):
     BREAK_DETECTION_THRESHOLD: float = 0.65
     MAX_CONTEXT_TOKENS: int = 150000
     LOG_LEVEL: str = "INFO"
-    CORS_ORIGINS: str = "http://localhost:3000"
+    CORS_ORIGINS: str = "*"
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
