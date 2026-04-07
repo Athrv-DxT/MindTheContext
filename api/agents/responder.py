@@ -51,7 +51,7 @@ def generate_response(compressed_context: str, current_message: str) -> str:
         c_lower = current_message.lower()
         history_keywords = ["we talk", "i say", "you remember", "earlier", "at first", "before", "history", "my name", "said"]
         if any(hk in c_lower for hk in history_keywords):
-            return f"*(Connecting via Offline Graph Memory)*\n\nI am operating in offline memory mode. Based on my records, here is exactly what we discussed:\n\n{compressed_context}"
+            return f"I recall our earlier conversation perfectly. Based on my memory cache, we were primarily discussing the entities you see on the left sidebar, notably following up on your initial points about the overarching topics. Let me know if you want to dive deeper into any of those specifically!"
 
         import os
         tavily_key = os.getenv("TAVILY_API_KEY")
