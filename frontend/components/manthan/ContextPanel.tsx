@@ -5,8 +5,8 @@ export function ContextPanel({ state, onToggle, onNewChat }: { state: PanelState
   const clarityPercent = Math.round((1 - (state.referenceAmbiguity || 0)) * 100);
   
   const getScoreColor = (val: number, inverse = false) => {
-     let isRed = inverse ? val < 0.35 : val > 0.65;
-     let isAmber = inverse ? (val >= 0.35 && val <= 0.70) : (val >= 0.30 && val <= 0.65);
+     const isRed = inverse ? val < 0.35 : val > 0.65;
+     const isAmber = inverse ? (val >= 0.35 && val <= 0.70) : (val >= 0.30 && val <= 0.65);
      
      if (isRed) return "text-red-400 bg-red-500/10 border border-red-500/20";
      if (isAmber) return "text-amber-400 bg-amber-500/10 border border-amber-500/20";

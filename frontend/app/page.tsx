@@ -1,5 +1,4 @@
 import { ProductCard } from '@/components/landing/ProductCard';
-import Link from 'next/link';
 
 export default function Landing() {
   return (

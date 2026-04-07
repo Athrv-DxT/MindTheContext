@@ -4,7 +4,7 @@ import { useState } from 'react';
 export function ApiDocs() {
   const [tab, setTab] = useState('curl');
   
-  const snippets: any = {
+  const snippets: Record<string, string> = {
     curl: `curl -X POST https://api.mindthecontext.app/chat \\
   -H "Authorization: Bearer cc_live_xxxxxxxxx" \\
   -H "Content-Type: application/json" \\
