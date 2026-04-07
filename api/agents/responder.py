@@ -30,7 +30,23 @@ def generate_response(compressed_context: str, current_message: str) -> str:
         )
         return response.text
     except Exception as e:
-        log.warning(f"Response Generator crashed natively: {e}. Bridging gracefully into Tavily Context Fallback.")
+        log.warning(f"Response Generator crashed natively: {e}. Bridging gracefully into Claude/Tavily Context Fallback.")
+        
+        anthropic_key = settings.ANTHROPIC_API_KEY
+        if anthropic_key:
+            try:
+                import anthropic
+                ant = anthropic.Anthropic(api_key=anthropic_key)
+                resp = ant.messages.create(
+                    model=settings.ANTHROPIC_MODEL,
+                    max_tokens=1024,
+                    system=system_instruction,
+                    messages=[{"role": "user", "content": prompt}]
+                )
+                return resp.content[0].text.strip()
+            except Exception as e2:
+                log.error(f"Anthropic bridge fractured: {e2}")
+
         import os
         tavily_key = os.getenv("TAVILY_API_KEY")
         if tavily_key:
@@ -45,7 +61,7 @@ def generate_response(compressed_context: str, current_message: str) -> str:
                 if r.ok:
                     ans = r.json().get("answer")
                     if ans:
-                        return f"*(Connecting via Adaptive Tavily Fallback)*\n\n{ans}"
+                        return ans
             except Exception as e2:
                 log.error(f"Tavily bridge fractured: {e2}")
         return "I encountered a minor cognitive delay processing that. Could you repeat?"
