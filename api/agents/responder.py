@@ -57,10 +57,25 @@ def generate_response(compressed_context: str, current_message: str) -> str:
         tavily_key = os.getenv("TAVILY_API_KEY")
         if tavily_key:
             try:
+                # Force active context into stateless web searches
+                tavily_query = current_message
+                if "ACTIVE ENTITIES" in compressed_context and ("it" in c_lower or "this" in c_lower or "they" in c_lower or len(current_message) < 50):
+                    try:
+                        import ast
+                        entities_str = compressed_context.split("--- ACTIVE ENTITIES ---")[1].split("---")[0].strip()
+                        edata = ast.literal_eval(entities_str)
+                        all_entities = []
+                        for k in ["organizations", "projects", "people"]:
+                            all_entities.extend(edata.get(k, []))
+                        if all_entities:
+                            tavily_query = f"{' '.join(all_entities)}: {current_message}"
+                    except Exception as parse_e:
+                        log.warning(f"Failed parsing entities for Tavily query augmentation: {parse_e}")
+                        
                 import requests
                 r = requests.post("https://api.tavily.com/search", json={
                     "api_key": tavily_key,
-                    "query": current_message,
+                    "query": tavily_query,
                     "search_depth": "basic",
                     "include_answer": True
                 }, timeout=10)
