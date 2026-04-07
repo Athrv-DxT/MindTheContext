@@ -5,7 +5,7 @@ export function LiveDemo() {
   const [step, setStep] = useState(1);
 
   return (
-    <section className="py-12 border-y border-slate-800/50 bg-slate-900/20 backdrop-blur-sm">
+    <section id="demo" className="py-12 border-y border-slate-800/50 bg-slate-900/20 backdrop-blur-sm scroll-mt-24">
       <div className="max-w-5xl mx-auto px-6">
         <div className="text-center mb-16">
            <h2 className="text-3xl font-bold mb-4 drop-shadow-md">See MindTheContext in action</h2>

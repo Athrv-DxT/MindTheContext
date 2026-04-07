@@ -2,7 +2,7 @@ import { WaitlistForm } from './WaitlistForm';
 
 export function PitchSection() {
   return (
-    <section className="text-center max-w-4xl mx-auto pt-10">
+    <section id="hero" className="text-center max-w-4xl mx-auto pt-10 scroll-mt-32">
       <div className="inline-block px-4 py-1.5 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-400 text-xs font-bold tracking-widest uppercase mb-8 shadow-[0_0_15px_rgba(20,184,166,0.2)]">
         API For Developers
       </div>
