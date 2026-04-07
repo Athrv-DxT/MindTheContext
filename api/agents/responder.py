@@ -30,8 +30,22 @@ def generate_response(compressed_context: str, current_message: str) -> str:
         )
         return response.text
     except Exception as e:
-        import traceback
-        with open("responder_crash.log", "w") as f:
-            traceback.print_exc(file=f)
-        log.error(f"Response Generator crashed: {e}")
+        log.warning(f"Response Generator crashed natively: {e}. Bridging gracefully into Tavily Context Fallback.")
+        import os
+        tavily_key = os.getenv("TAVILY_API_KEY")
+        if tavily_key:
+            try:
+                import requests
+                r = requests.post("https://api.tavily.com/search", json={
+                    "api_key": tavily_key,
+                    "query": current_message,
+                    "search_depth": "basic",
+                    "include_answer": True
+                }, timeout=10)
+                if r.ok:
+                    ans = r.json().get("answer")
+                    if ans:
+                        return f"*(Connecting via Adaptive Tavily Fallback)*\n\n{ans}"
+            except Exception as e2:
+                log.error(f"Tavily bridge fractured: {e2}")
         return "I encountered a minor cognitive delay processing that. Could you repeat?"
