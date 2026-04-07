@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     GEMINI_MODEL_EMBEDDING: str = "models/text-embedding-004"
     
     ANTHROPIC_API_KEY: str = ""
-    ANTHROPIC_MODEL: str = "claude-sonnet-4-20250514"
+    ANTHROPIC_MODEL: str = "claude-3-5-sonnet-20241022"
     
     SUPABASE_URL: str = ""
     SUPABASE_SERVICE_KEY: str = ""
